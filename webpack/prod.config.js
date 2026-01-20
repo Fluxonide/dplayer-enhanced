@@ -27,9 +27,7 @@ module.exports = {
     resolve: {
         modules: [path.resolve(__dirname, '..', 'node_modules'), 'node_modules'],
         extensions: ['.js', '.less'],
-        alias: {
-            'art-template': path.resolve(__dirname, '..', 'node_modules', 'art-template'),
-        },
+        alias: {},
         fallback: {
             dgram: false,
             fs: false,
@@ -102,5 +100,6 @@ module.exports = {
             DPLAYER_VERSION: `"${require('../package.json').version}"`,
             GIT_HASH: JSON.stringify(gitRevisionPlugin.version()),
         }),
+        new webpack.NormalModuleReplacementPlugin(/..\\..\\node_modules\\art-template\\lib\\runtime.js/, 'art-template/lib/runtime.js'),
     ],
 };
