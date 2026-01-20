@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPlayer Enhanced - Keyboard Shortcuts Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+
+        h1 {
+            color: #e94560;
+        }
+
+        h2 {
+            color: #0f3460;
+            background: #e94560;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .player-container {
+            margin: 20px 0;
+        }
+
+        .shortcuts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .shortcut {
+            background: #16213e;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .key {
+            background: #e94560;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .action {
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎬 DPlayer Enhanced v1.28.0</h1>
+    <p>Click the video container to focus, then try the keyboard shortcuts below:</p>
+
+    <div id="dplayer" class="player-container"></div>
+
+    <h2>🎹 Enhanced Keyboard Shortcuts</h2>
+    <div class="shortcuts">
+        <div class="shortcut"><span class="key">Space</span> <span class="action">Play / Pause</span></div>
+        <div class="shortcut"><span class="key">A</span> <span class="action">Rewind 5s</span></div>
+        <div class="shortcut"><span class="key">D</span> <span class="action">Forward 5s</span></div>
+        <div class="shortcut"><span class="key">←</span> <span class="action">Rewind 5s</span></div>
+        <div class="shortcut"><span class="key">→</span> <span class="action">Forward 5s</span></div>
+        <div class="shortcut"><span class="key">↑</span> <span class="action">Volume Up</span></div>
+        <div class="shortcut"><span class="key">↓</span> <span class="action">Volume Down</span></div>
+        <div class="shortcut"><span class="key">F</span> <span class="action">Browser Fullscreen</span></div>
+        <div class="shortcut"><span class="key">W</span> <span class="action">Web Fullscreen</span></div>
+        <div class="shortcut"><span class="key">M</span> <span class="action">Toggle Mute</span></div>
+        <div class="shortcut"><span class="key">+</span> / <span class="key">=</span> <span class="action">Speed Up
+                (+0.05x)</span></div>
+        <div class="shortcut"><span class="key">-</span> <span class="action">Speed Down (-0.05x)</span></div>
+        <div class="shortcut"><span class="key">Ctrl+X</span> <span class="action">Speed Up</span></div>
+        <div class="shortcut"><span class="key">Ctrl+Z</span> <span class="action">Speed Down</span></div>
+        <div class="shortcut"><span class="key">Ctrl+Shift</span> <span class="action">Reset to 1x</span></div>
+        <div class="shortcut"><span class="key">Shift+S</span> <span class="action">Screenshot</span></div>
+        <div class="shortcut"><span class="key">0-9</span> <span class="action">Seek to 0%-90%</span></div>
+        <div class="shortcut"><span class="key">Numpad Enter</span> <span class="action">Reset Speed</span></div>
+        <div class="shortcut"><span class="key">ESC</span> <span class="action">Exit Fullscreen</span></div>
+    </div>
+
+    <script src="../dist/DPlayer.min.js"></script>
+    <script>
+        const dp = new DPlayer({
+            container: document.getElementById('dplayer'),
+            video: {
+                url: 'https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4',
+                pic: 'https://i.loli.net/2019/06/06/5cf8c5d9c57b510947.png',
+            },
+            hotkey: true,
+        });
+
+        // Log for debugging
+        console.log('DPlayer Enhanced v' + DPlayer.version + ' loaded');
+    </script>
+</body>
+
+</html>
