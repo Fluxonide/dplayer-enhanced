@@ -7,7 +7,7 @@ class HotKey {
         this.player = player;
         this.doHotKeyHandler = this.doHotKey.bind(this);
         this.cancelFullScreenHandler = this.cancelFullScreen.bind(this);
-        
+
         if (this.player.options.hotkey) {
             document.addEventListener('keydown', this.doHotKeyHandler);
         }
@@ -25,14 +25,14 @@ class HotKey {
         canvas.height = video.videoHeight;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
+
         // Format timestamp as HH-MM-SS
         const time = video.currentTime;
         const h = String(Math.floor(time / 3600)).padStart(2, '0');
         const m = String(Math.floor((time % 3600) / 60)).padStart(2, '0');
         const s = String(Math.floor(time % 60)).padStart(2, '0');
         const timestamp = `${h}-${m}-${s}`;
-        
+
         canvas.toBlob((blob) => {
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -42,7 +42,7 @@ class HotKey {
             document.body.removeChild(link);
             URL.revokeObjectURL(link.href);
         });
-        
+
         this.player.notice(`Screenshot: ${timestamp}`);
     }
 
@@ -74,7 +74,7 @@ class HotKey {
     seekToPercent(percent) {
         if (this.player.video.duration) {
             const time = (percent / 100) * this.player.video.duration;
-            this.player.seek(time);
+            this.player.seek(time, true);
             this.player.notice(`Seek: ${percent}%`);
         }
     }
@@ -83,7 +83,7 @@ class HotKey {
         if (this.player.focus) {
             const tag = document.activeElement.tagName.toUpperCase();
             const editable = document.activeElement.getAttribute('contenteditable');
-            
+
             // Skip if user is typing in an input
             if (tag === 'INPUT' || tag === 'TEXTAREA' || editable === '' || editable === 'true') {
                 return;
@@ -158,7 +158,8 @@ class HotKey {
 
                 // Numpad Enter: Reset speed
                 case 13:
-                    if (event.location === 3) { // Numpad
+                    if (event.location === 3) {
+                        // Numpad
                         event.preventDefault();
                         this.resetSpeed();
                     }

@@ -191,15 +191,17 @@ class DPlayer {
     /**
      * Seek video
      */
-    seek(time) {
+    seek(time, nonotice = false) {
         time = Math.max(time, 0);
         if (this.video.duration) {
             time = Math.min(time, this.video.duration);
         }
-        if (this.video.currentTime < time) {
-            this.notice(`${this.tran('ff').replace('%s', (time - this.video.currentTime).toFixed(0))}`);
-        } else if (this.video.currentTime > time) {
-            this.notice(`${this.tran('rew').replace('%s', (this.video.currentTime - time).toFixed(0))}`);
+        if (!nonotice) {
+            if (this.video.currentTime < time) {
+                this.notice(`${this.tran('ff').replace('%s', (time - this.video.currentTime).toFixed(0))}`);
+            } else if (this.video.currentTime > time) {
+                this.notice(`${this.tran('rew').replace('%s', (this.video.currentTime - time).toFixed(0))}`);
+            }
         }
 
         this.video.currentTime = time;
