@@ -93,6 +93,7 @@
             <span class="dplayer-ptime">0:00</span> /
             <span class="dplayer-dtime">0:00</span>
         </span>
+        <span class="dplayer-speed-indicator" data-balloon="{{ tran('speed') }}" data-balloon-pos="up">1x</span>
         {{ if options.live }}
         <span class="dplayer-live-badge"><span class="dplayer-live-dot" style="background: {{ options.theme }};"></span>{{ tran('live') }}</span>
         {{ /if }}

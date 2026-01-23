@@ -55,16 +55,14 @@ class HotKey {
         // Clamp between 0.25 and 2.0
         newRate = Math.max(0.25, Math.min(2.0, newRate));
         newRate = Math.round(newRate * 100) / 100; // Round to 2 decimal places
-        this.player.video.playbackRate = newRate;
-        this.player.notice(`Speed: ${newRate}x`);
+        this.player.speed(newRate);
     }
 
     /**
      * Reset playback speed to 1x
      */
     resetSpeed() {
-        this.player.video.playbackRate = 1.0;
-        this.player.notice('Speed: 1.00x');
+        this.player.speed(1.0);
     }
 
     /**

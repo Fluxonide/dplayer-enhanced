@@ -65,6 +65,7 @@ class Template {
         this.danmakuOpacityBarWrapWrap = this.container.querySelector('.dplayer-danmaku-bar-wrap');
         this.danmakuOpacityBox = this.container.querySelector('.dplayer-setting-danmaku');
         this.dtime = this.container.querySelector('.dplayer-dtime');
+        this.speedIndicator = this.container.querySelector('.dplayer-speed-indicator');
         this.controller = this.container.querySelector('.dplayer-controller');
         this.commentInput = this.container.querySelector('.dplayer-comment-input');
         this.commentButton = this.container.querySelector('.dplayer-comment-icon');

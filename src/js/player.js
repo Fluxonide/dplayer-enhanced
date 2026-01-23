@@ -645,37 +645,41 @@ class DPlayer {
     }
 
     notice(text, time = 2000, opacity = 0.8, id) {
-        let oldNoticeEle;
-        if (id) {
-            oldNoticeEle = document.getElementById(`dplayer-notice-${id}`);
-            if (oldNoticeEle) {
-                oldNoticeEle.innerHTML = text;
+        // Clear all existing notices first to prevent spam
+        const noticeListEl = this.template.noticeList;
+        if (noticeListEl) {
+            // Remove all existing notice elements
+            while (noticeListEl.firstChild) {
+                noticeListEl.removeChild(noticeListEl.firstChild);
             }
-            if (this.noticeList[id]) {
-                clearTimeout(this.noticeList[id]);
-                this.noticeList[id] = null;
+            // Clear all pending notice timeouts
+            for (const key in this.noticeList) {
+                if (this.noticeList[key]) {
+                    clearTimeout(this.noticeList[key]);
+                    this.noticeList[key] = null;
+                }
             }
-        }
-        if (!oldNoticeEle) {
-            const notice = Template.NewNotice(text, opacity, id);
-            this.template.noticeList.appendChild(notice);
-            oldNoticeEle = notice;
         }
 
-        this.events.trigger('notice_show', oldNoticeEle);
+        const notice = Template.NewNotice(text, opacity, id);
+        this.template.noticeList.appendChild(notice);
+
+        this.events.trigger('notice_show', notice);
 
         if (time > 0) {
             this.noticeList[id] = setTimeout(
                 (function (e, dp) {
                     return () => {
                         e.addEventListener('animationend', () => {
-                            dp.template.noticeList.removeChild(e);
+                            if (e.parentNode) {
+                                dp.template.noticeList.removeChild(e);
+                            }
                         });
                         e.classList.add('remove-notice');
                         dp.events.trigger('notice_hide');
                         dp.noticeList[id] = null;
                     };
-                })(oldNoticeEle, this),
+                })(notice, this),
                 time
             );
         }
@@ -693,6 +697,9 @@ class DPlayer {
 
     speed(rate) {
         this.video.playbackRate = rate;
+        if (this.template.speedIndicator) {
+            this.template.speedIndicator.innerText = `${rate}x`;
+        }
         this.notice(`Speed: ${rate}x`);
     }
 
