@@ -1,6 +1,6 @@
 {
     "name": "dplayer-enhanced",
-    "version": "0.0.3",
+    "version": "1.0.0",
     "description": "Enhanced DPlayer with comprehensive keyboard shortcuts - forked from DIYgod/DPlayer",
     "main": "dist/DPlayer.min.js",
     "scripts": {

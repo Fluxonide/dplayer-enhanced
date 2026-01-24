@@ -197,11 +197,9 @@ class DPlayer {
             time = Math.min(time, this.video.duration);
         }
         if (!nonotice) {
-            if (this.video.currentTime < time) {
-                this.notice(`${this.tran('ff').replace('%s', (time - this.video.currentTime).toFixed(0))}`);
-            } else if (this.video.currentTime > time) {
-                this.notice(`${this.tran('rew').replace('%s', (this.video.currentTime - time).toFixed(0))}`);
-            }
+            const timeText = utils.secondToTime(time);
+            const durationText = this.video.duration ? utils.secondToTime(this.video.duration) : '00:00';
+            this.notice(`${timeText} / ${durationText}`);
         }
 
         this.video.currentTime = time;
