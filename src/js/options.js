@@ -33,7 +33,7 @@ export default (options) => {
         !options.video.type && (options.video.type = 'auto');
     }
     if (typeof options.danmaku === 'object' && options.danmaku) {
-        !options.danmaku.user && (options.danmaku.user = 'DIYgod');
+        !options.danmaku.user && (options.danmaku.user = 'Fluxonide');
     }
     if (options.subtitle) {
         !options.subtitle.type && (options.subtitle.type = 'webvtt');
@@ -59,11 +59,11 @@ export default (options) => {
         },
         {
             key: 'about-author',
-            link: 'https://diygod.me',
+            link: 'https://github.com/Fluxonide',
         },
         {
-            text: `DPlayer v${DPLAYER_VERSION}`,
-            link: 'https://github.com/MoePlayer/DPlayer',
+            text: `dplayer-enhanced v${DPLAYER_VERSION}`,
+            link: 'https://github.com/Fluxonide/dplayer-enhanced',
         },
     ]);
 
