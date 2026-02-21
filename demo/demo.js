@@ -124,7 +124,7 @@ function initPlayers() {
             addition: ['https://s-sh-17-dplayercdn.oss.dogecdn.com/1678963.json'],
             token: 'tokendemo',
             maximum: 3000,
-            user: 'DIYgod',
+            user: 'Fluxonide',
             bottom: '15%',
             unlimited: true,
             speedRate: 0.5,
@@ -132,7 +132,7 @@ function initPlayers() {
         contextmenu: [
             {
                 text: 'custom contextmenu',
-                link: 'https://github.com/MoePlayer/DPlayer'
+                link: 'https://github.com/Fluxonide/DPlayer'
             }
         ]
     });
@@ -196,7 +196,7 @@ function initPlayers() {
     //     container: document.getElementById('dplayer5'),
     //     preload: 'none',
     //     video: {
-    //         url: 'https://moeplayer.b0.upaiyun.com/dplayer/hikarunara.flv',
+    //         url: 'https://Fluxonide.b0.upaiyun.com/dplayer/hikarunara.flv',
     //         type: 'flv'
     //     }
     // });

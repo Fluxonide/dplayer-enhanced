@@ -16,9 +16,9 @@ You can support DPlayer via donations.
 
 Recurring donors will be rewarded via express issue response, or even have your name displayed on our GitHub page and website.
 
--   Become a Sponser on [GitHub](https://github.com/sponsors/DIYgod)
+-   Become a Sponser on [GitHub](https://github.com/sponsors/Fluxonide)
 -   Become a Sponser on [Patreon](https://www.patreon.com/DIYgod)
--   Become a Sponser on [爱发电](https://afdian.net/@diygod)
+-   Become a Sponser on [爱发电](https://afdian.net/@Fluxonide)
 -   Contact us directly: i@diygod.me
 
 ### One-time Donation
@@ -39,4 +39,4 @@ We accept donations via the following ways:
 
 This project exists thanks to all the people who contribute.
 
-<a href="https://github.com/MoePlayer/DPlayer/graphs/contributors"><img src="https://opencollective.com/DPlayer/contributors.svg?width=890" /></a>
+<a href="https://github.com/Fluxonide/DPlayer/graphs/contributors"><img src="https://opencollective.com/DPlayer/contributors.svg?width=890" /></a>

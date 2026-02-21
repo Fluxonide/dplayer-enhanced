@@ -14,9 +14,9 @@ DPlayer 是采用 MIT 许可的开源项目，使用完全免费。 但是随着
 
 ## 周期性赞助
 
--   通过 [GitHub](https://github.com/sponsors/DIYgod) 赞助
+-   通过 [GitHub](https://github.com/sponsors/Fluxonide) 赞助
 -   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助
--   通过 [爱发电](https://afdian.net/@diygod) 赞助
+-   通过 [爱发电](https://afdian.net/@Fluxonide) 赞助
 -   给我们发邮件联系赞助事宜: <i@diygod.me>
 
 ## 一次性赞助
@@ -39,4 +39,4 @@ DPlayer 是采用 MIT 许可的开源项目，使用完全免费。 但是随着
 
 感谢所有贡献者。
 
-<a href="https://github.com/MoePlayer/DPlayer/graphs/contributors"><img src="https://opencollective.com/DPlayer/contributors.svg?width=890" /></a>
+<a href="https://github.com/Fluxonide/DPlayer/graphs/contributors"><img src="https://opencollective.com/DPlayer/contributors.svg?width=890" /></a>

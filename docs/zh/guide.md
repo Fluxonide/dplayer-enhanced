@@ -95,7 +95,7 @@ DPlayer 有丰富的参数可以自定义你的播放器实例
 | video.defaultQuality | -                                  | 见[#清晰度切换](#清晰度切换)                                                                            |
 | video.url            | -                                  | 视频链接                                                                                                |
 | video.pic            | -                                  | 视频封面                                                                                                |
-| video.thumbnails     | -                                  | 视频缩略图，可以使用 [DPlayer-thumbnails](https://github.com/MoePlayer/DPlayer-thumbnails) 生成         |
+| video.thumbnails     | -                                  | 视频缩略图，可以使用 [DPlayer-thumbnails](https://github.com/Fluxonide/DPlayer-thumbnails) 生成         |
 | video.type           | 'auto'                             | 可选值: 'auto', 'hls', 'flv', 'dash', 'webtorrent', 'normal' 或其他自定义类型, 见[#MSE 支持](#mse-支持) |
 | video.customType     | -                                  | 自定义类型, 见[#MSE 支持](#mse-支持)                                                                    |
 | subtitle             | -                                  | 外挂字幕                                                                                                |
@@ -110,7 +110,7 @@ DPlayer 有丰富的参数可以自定义你的播放器实例
 | danmaku.token        | -                                  | 弹幕后端验证 token                                                                                      |
 | danmaku.maximum      | -                                  | 弹幕最大数量                                                                                            |
 | danmaku.addition     | -                                  | 额外外挂弹幕，见[#bilibili 弹幕](#bilibili-弹幕)                                                        |
-| danmaku.user         | 'DIYgod'                           | 弹幕用户名                                                                                              |
+| danmaku.user         | 'Fluxonide'                           | 弹幕用户名                                                                                              |
 | danmaku.bottom       | -                                  | 弹幕距离播放器底部的距离，防止遮挡字幕，取值形如: '10px' '10%'                                          |
 | danmaku.unlimited    | false                              | 海量弹幕模式，即使重叠也展示全部弹幕，请注意播放器会记忆用户设置，用户手动设置后即失效                  |
 | danmaku.speedRate    | 1                                  | 弹幕速度倍率，越大速度越快                                                                              |

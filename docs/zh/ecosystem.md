@@ -4,7 +4,7 @@ sidebar: auto
 
 # 生态
 
-让 DPlayer 变得更好，请随意在 [`Let me know!`](https://github.com/MoePlayer/DPlayer/issues/31) 提交你的项目和产品
+让 DPlayer 变得更好，请随意在 [`Let me know!`](https://github.com/Fluxonide/DPlayer/issues/31) 提交你的项目和产品
 
 ## 帮助
 

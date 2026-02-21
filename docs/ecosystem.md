@@ -4,7 +4,7 @@ sidebar: auto
 
 # Ecosystem
 
-Let's make DPlayer better, feel free to submit yours in [`Let me know!`](https://github.com/MoePlayer/DPlayer/issues/31)
+Let's make DPlayer better, feel free to submit yours in [`Let me know!`](https://github.com/Fluxonide/DPlayer/issues/31)
 
 ## Help
 

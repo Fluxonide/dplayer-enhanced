@@ -2,7 +2,7 @@
 home: true
 actionText: Get Started →
 actionLink: /guide/
-footer: MIT Licensed | Made with love by DIYgod
+footer: MIT Licensed | Made with love by Fluxonide
 ---
 
 <div>

@@ -6,7 +6,7 @@
 > 🍭 Wow, such a lovely HTML5 danmaku video player
 
 [![npm](https://img.shields.io/npm/v/dplayer-enhanced.svg?style=flat-square)](https://www.npmjs.com/package/dplayer-enhanced)
-[![npm](https://img.shields.io/npm/l/dplayer-enhanced.svg?style=flat-square)](https://github.com/DIYgod/DPlayer/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/l/dplayer-enhanced.svg?style=flat-square)](https://github.com/Fluxonide/DPlayer/blob/master/LICENSE)
 [![npm](https://img.shields.io/npm/dt/dplayer-enhanced.svg?style=flat-square)](https://www.npmjs.com/package/dplayer-enhanced)
 
 ## Introduction
@@ -66,7 +66,7 @@ npm install dplayer-enhanced
 
 Using DPlayer on your project? [Let me know!](https://github.com/DIYgod/DPlayer/issues/31)
 
-**[Docs](https://dplayer.diygod.dev/)**
+**[Docs](https://dplayer.Fluxonide.dev/)**
 
 **[中文文档](https://dplayer.diygod.dev/zh/)**
 
@@ -82,7 +82,7 @@ Using DPlayer on your project? [Let me know!](https://github.com/DIYgod/DPlayer/
 
 ### Contributors
 
-<a href="https://github.com/MoePlayer/DPlayer/graphs/contributors"><img src="https://opencollective.com/DPlayer/contributors.svg?width=890" /></a>
+<a href="https://github.com/Fluxonide/DPlayer/graphs/contributors"><img src="https://opencollective.com/DPlayer/contributors.svg?width=890" /></a>
 
 ## Related Projects
 
