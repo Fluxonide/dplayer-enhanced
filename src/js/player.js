@@ -539,6 +539,19 @@ class DPlayer {
             }
         });
 
+        // Preserve playback rate when browser resets it (e.g. three-finger trackpad tap)
+        this.on('ratechange', () => {
+            if (this._savedPlaybackRate && this.video.playbackRate !== this._savedPlaybackRate) {
+                // Defer restoration to avoid browser ignoring rate changes during ratechange handler
+                const targetRate = this._savedPlaybackRate;
+                setTimeout(() => {
+                    if (this._savedPlaybackRate === targetRate && this.video.playbackRate !== targetRate) {
+                        this.video.playbackRate = targetRate;
+                    }
+                }, 0);
+            }
+        });
+
         this.on('timeupdate', () => {
             if (!this.moveBar) {
                 this.bar.set('played', this.video.currentTime / this.video.duration, 'width');
@@ -694,6 +707,7 @@ class DPlayer {
     }
 
     speed(rate) {
+        this._savedPlaybackRate = rate;
         this.video.playbackRate = rate;
         if (this.template.speedIndicator) {
             this.template.speedIndicator.innerText = `${rate}x`;

@@ -106,7 +106,9 @@ class HotKey {
             }
 
             // Ctrl+Shift: Reset speed
-            if (event.ctrlKey && event.shiftKey) {
+            // Exclude when Meta key is also pressed to avoid false triggers from
+            // trackpad gestures (e.g. three-finger tap sends Meta+Ctrl+Shift)
+            if (event.ctrlKey && event.shiftKey && !event.metaKey) {
                 event.preventDefault();
                 this.resetSpeed();
                 return;
