@@ -367,14 +367,196 @@
             border-radius: 6px;
         }
 
+        .dplayer-speed-wrap {
+            position: relative;
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
         .dplayer-speed-indicator {
             line-height: 38px;
             color: #eee;
             text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
             vertical-align: middle;
             font-size: 13px;
-            cursor: default;
-            margin-left: 10px;
+            cursor: pointer;
+            padding: 0 4px;
+            border-radius: 3px;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+            display: inline-block;
+            min-width: 32px;
+            text-align: center;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+            }
+        }
+
+        .dplayer-speed-panel {
+            position: absolute;
+            bottom: 42px;
+            left: 50%;
+            transform: translateX(-50%) translateY(8px) scale(0.95);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            width: 280px;
+            border-radius: 10px;
+            background: rgba(28, 28, 28, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.06);
+            padding: 16px 20px 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            box-sizing: border-box;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -6px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 6px solid rgba(28, 28, 28, 0.7);
+            }
+
+            &.dplayer-speed-panel-open {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+
+            .dplayer-speed-panel-title {
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 12px;
+                margin-bottom: 14px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .dplayer-speed-slider-wrap {
+                position: relative;
+                width: 100%;
+                padding: 0 7px;
+                box-sizing: border-box;
+            }
+
+            .dplayer-speed-slider-track {
+                position: relative;
+                width: 100%;
+                height: 22px;
+                cursor: pointer;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 100%;
+                    height: 3px;
+                    background: rgba(255, 255, 255, 0.18);
+                    border-radius: 1.5px;
+                }
+            }
+
+            .dplayer-speed-slider-filled {
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                height: 3px;
+                background: #fff;
+                border-radius: 1.5px 0 0 1.5px;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .dplayer-speed-slider-thumb {
+                position: absolute;
+                top: 50%;
+                width: 12px;
+                height: 12px;
+                background: #fff;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: box-shadow 0.2s ease;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+                cursor: pointer;
+                z-index: 3;
+
+                &:hover {
+                    box-shadow:
+                        0 0 0 5px rgba(255, 255, 255, 0.12),
+                        0 1px 3px rgba(0, 0, 0, 0.5);
+                }
+
+                &.dplayer-speed-slider-thumb-active {
+                    box-shadow:
+                        0 0 0 7px rgba(255, 255, 255, 0.15),
+                        0 1px 3px rgba(0, 0, 0, 0.5);
+                }
+            }
+
+            .dplayer-speed-slider-tick {
+                position: absolute;
+                top: 50%;
+                width: 5px;
+                height: 5px;
+                background: #505050;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                pointer-events: none;
+                transition: background 0.15s ease;
+
+                &.dplayer-speed-slider-tick-filled {
+                    background: #fff;
+                }
+
+                &.dplayer-speed-slider-tick-active {
+                    background: #fff;
+                }
+            }
+
+            .dplayer-speed-slider-labels {
+                position: relative;
+                margin-top: 2px;
+                height: 16px;
+            }
+
+            .dplayer-speed-slider-label {
+                position: absolute;
+                top: 0;
+                transform: translateX(-50%);
+                color: rgba(255, 255, 255, 0.45);
+                font-size: 10px;
+                cursor: pointer;
+                text-align: center;
+                transition: color 0.15s ease;
+                user-select: none;
+                white-space: nowrap;
+
+                &:hover {
+                    color: rgba(255, 255, 255, 0.85);
+                }
+
+                &.dplayer-speed-slider-label-active {
+                    color: #fff;
+                    font-weight: 600;
+                }
+            }
         }
 
         .dplayer-icon {

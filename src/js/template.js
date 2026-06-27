@@ -66,6 +66,12 @@ class Template {
         this.danmakuOpacityBox = this.container.querySelector('.dplayer-setting-danmaku');
         this.dtime = this.container.querySelector('.dplayer-dtime');
         this.speedIndicator = this.container.querySelector('.dplayer-speed-indicator');
+        this.speedPanel = this.container.querySelector('.dplayer-speed-panel');
+        this.speedSliderTrack = this.container.querySelector('.dplayer-speed-slider-track');
+        this.speedSliderFilled = this.container.querySelector('.dplayer-speed-slider-filled');
+        this.speedSliderThumb = this.container.querySelector('.dplayer-speed-slider-thumb');
+        this.speedSliderTicks = this.container.querySelectorAll('.dplayer-speed-slider-tick');
+        this.speedSliderLabels = this.container.querySelectorAll('.dplayer-speed-slider-label');
         this.controller = this.container.querySelector('.dplayer-controller');
         this.commentInput = this.container.querySelector('.dplayer-comment-input');
         this.commentButton = this.container.querySelector('.dplayer-comment-icon');

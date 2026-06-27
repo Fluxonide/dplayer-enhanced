@@ -397,6 +397,7 @@ class Controller {
     hide() {
         this.player.container.classList.add('dplayer-hide-controller');
         this.player.setting.hide();
+        this.player.setting.hideSpeedPanel();
         this.player.comment && this.player.comment.hide();
     }
 
