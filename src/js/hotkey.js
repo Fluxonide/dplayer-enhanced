@@ -78,7 +78,7 @@ class HotKey {
     }
 
     doHotKey(e) {
-        if (this.player.focus) {
+        if (this.player.focus || this.player.options.globalHotkey) {
             const tag = document.activeElement.tagName.toUpperCase();
             const editable = document.activeElement.getAttribute('contenteditable');
 
@@ -91,31 +91,29 @@ class HotKey {
             const key = event.key;
             const keyCode = event.keyCode;
 
-            // Ctrl+X: Increase speed
-            if (event.ctrlKey && key.toLowerCase() === 'x') {
+            // Shift+. (>) : Increase speed — same as YouTube/VLC
+            if (!event.ctrlKey && !event.altKey && key === '>') {
                 event.preventDefault();
                 this.changeSpeed(0.05);
                 return;
             }
 
-            // Ctrl+Z: Decrease speed
-            if (event.ctrlKey && key.toLowerCase() === 'z') {
+            // Shift+, (<) : Decrease speed — same as YouTube/VLC
+            if (!event.ctrlKey && !event.altKey && key === '<') {
                 event.preventDefault();
                 this.changeSpeed(-0.05);
                 return;
             }
 
-            // Ctrl+Shift: Reset speed
-            // Exclude when Meta key is also pressed to avoid false triggers from
-            // trackpad gestures (e.g. three-finger tap sends Meta+Ctrl+Shift)
-            if (event.ctrlKey && event.shiftKey && !event.metaKey) {
+            // Backspace: Reset speed to 1x
+            if (!event.ctrlKey && !event.altKey && !event.shiftKey && event.keyCode === 8) {
                 event.preventDefault();
                 this.resetSpeed();
                 return;
             }
 
-            // Shift+S: Take screenshot
-            if (event.shiftKey && key.toLowerCase() === 's') {
+            // P: Take screenshot (picture)
+            if (!event.ctrlKey && !event.altKey && !event.shiftKey && key.toLowerCase() === 'p') {
                 event.preventDefault();
                 this.takeScreenshot();
                 return;

@@ -157,14 +157,21 @@ class DPlayer {
 
         this.setting = new Setting(this);
         this.plugins = {};
-        this.docClickFun = () => {
-            this.focus = false;
-        };
-        this.containerClickFun = () => {
+        if (this.options.globalHotkey) {
+            // Always keep focus active so hotkeys work from anywhere on the page
             this.focus = true;
-        };
-        document.addEventListener('click', this.docClickFun, true);
-        this.container.addEventListener('click', this.containerClickFun, true);
+            this.docClickFun = null;
+            this.containerClickFun = null;
+        } else {
+            this.docClickFun = () => {
+                this.focus = false;
+            };
+            this.containerClickFun = () => {
+                this.focus = true;
+            };
+            document.addEventListener('click', this.docClickFun, true);
+            this.container.addEventListener('click', this.containerClickFun, true);
+        }
 
         this.paused = true;
 
@@ -711,6 +718,9 @@ class DPlayer {
         this.video.playbackRate = rate;
         if (this.template.speedIndicator) {
             this.template.speedIndicator.innerText = `${rate}x`;
+        }
+        if (this.setting) {
+            this.setting.updateSpeedPanelActive(rate);
         }
         this.notice(`Speed: ${rate}x`);
     }

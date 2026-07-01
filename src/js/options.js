@@ -14,6 +14,7 @@ export default (options) => {
         airplay: true,
         chromecast: false,
         hotkey: true,
+        globalHotkey: true,
         preload: 'metadata',
         volume: 0.7,
         playbackSpeed: [0.5, 0.75, 1, 1.25, 1.5, 2],
