@@ -164,6 +164,29 @@ class Setting {
             this.player.template.speedSliderThumb.addEventListener(utils.nameMap.dragStart, thumbDragStart);
         }
 
+        // − / + buttons on speed slider
+        const stepSpeed = (delta) => {
+            const next = Math.round((this.currentSpeed + delta) * 20) / 20;
+            const min = this.speedValues[0];
+            const max = this.speedValues[this.speedValues.length - 1];
+            const clamped = Math.min(max, Math.max(min, next));
+            this.currentSpeed = clamped;
+            this._updateSliderToSpeed(clamped);
+            this.player.speed(clamped);
+        };
+        if (this.player.template.speedSliderBtnMinus) {
+            this.player.template.speedSliderBtnMinus.addEventListener('click', (e) => {
+                e.stopPropagation();
+                stepSpeed(-0.05);
+            });
+        }
+        if (this.player.template.speedSliderBtnPlus) {
+            this.player.template.speedSliderBtnPlus.addEventListener('click', (e) => {
+                e.stopPropagation();
+                stepSpeed(0.05);
+            });
+        }
+
         // Click on labels to jump to that preset speed
         for (let i = 0; i < this.player.template.speedSliderLabels.length; i++) {
             this.player.template.speedSliderLabels[i].addEventListener('click', () => {

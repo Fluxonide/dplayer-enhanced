@@ -72,6 +72,8 @@ class Template {
         this.speedSliderThumb = this.container.querySelector('.dplayer-speed-slider-thumb');
         this.speedSliderTicks = this.container.querySelectorAll('.dplayer-speed-slider-tick');
         this.speedSliderLabels = this.container.querySelectorAll('.dplayer-speed-slider-label');
+        this.speedSliderBtnMinus = this.container.querySelector('.dplayer-speed-slider-btn-minus');
+        this.speedSliderBtnPlus = this.container.querySelector('.dplayer-speed-slider-btn-plus');
         this.controller = this.container.querySelector('.dplayer-controller');
         this.commentInput = this.container.querySelector('.dplayer-comment-input');
         this.commentButton = this.container.querySelector('.dplayer-comment-icon');

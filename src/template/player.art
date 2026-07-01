@@ -98,18 +98,22 @@
             <div class="dplayer-speed-panel">
                 <div class="dplayer-speed-panel-title">{{ tran('speed') }}</div>
                 <div class="dplayer-speed-slider-wrap">
-                    <div class="dplayer-speed-slider-track">
-                        <div class="dplayer-speed-slider-filled"></div>
-                        <div class="dplayer-speed-slider-thumb"></div>
-                        {{ each options.playbackSpeed }}
-                            <div class="dplayer-speed-slider-tick{{ $value === 1 ? ' dplayer-speed-slider-tick-active' : '' }}" data-speed="{{ $value }}"></div>
-                        {{ /each }}
+                    <button class="dplayer-speed-slider-btn dplayer-speed-slider-btn-minus">−</button>
+                    <div class="dplayer-speed-slider-inner">
+                        <div class="dplayer-speed-slider-track">
+                            <div class="dplayer-speed-slider-filled"></div>
+                            <div class="dplayer-speed-slider-thumb"></div>
+                            {{ each options.playbackSpeed }}
+                                <div class="dplayer-speed-slider-tick{{ $value === 1 ? ' dplayer-speed-slider-tick-active' : '' }}" data-speed="{{ $value }}"></div>
+                            {{ /each }}
+                        </div>
+                        <div class="dplayer-speed-slider-labels">
+                            {{ each options.playbackSpeed }}
+                                <span class="dplayer-speed-slider-label{{ $value === 1 ? ' dplayer-speed-slider-label-active' : '' }}" data-speed="{{ $value }}">{{ $value }}x</span>
+                            {{ /each }}
+                        </div>
                     </div>
-                    <div class="dplayer-speed-slider-labels">
-                        {{ each options.playbackSpeed }}
-                            <span class="dplayer-speed-slider-label{{ $value === 1 ? ' dplayer-speed-slider-label-active' : '' }}" data-speed="{{ $value }}">{{ $value }}x</span>
-                        {{ /each }}
-                    </div>
+                    <button class="dplayer-speed-slider-btn dplayer-speed-slider-btn-plus">+</button>
                 </div>
             </div>
         </div>
