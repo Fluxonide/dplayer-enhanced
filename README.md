@@ -50,10 +50,10 @@ npm install dplayer-enhanced
 | `Right Arrow`    | Forward 5 seconds         |
 | `Up Arrow`       | Increase Volume           |
 | `Down Arrow`     | Decrease Volume           |
-| `Ctrl` + `X`     | Increase Speed (+0.05x)   |
-| `Ctrl` + `Z`     | Decrease Speed (-0.05x)   |
-| `Ctrl` + `Shift` | Reset Speed to 1.0x       |
-| `Shift` + `S`    | Take Screenshot           |
+| `>` (`Shift+.`)  | Increase Speed (+0.05x)   |
+| `<` (`Shift+,`)  | Decrease Speed (-0.05x)   |
+| `Backspace`      | Reset Speed to 1.0x       |
+| `P`              | Take Screenshot           |
 | `A`              | Rewind 5 seconds          |
 | `D`              | Forward 5 seconds         |
 | `F`              | Toggle Browser Fullscreen |
