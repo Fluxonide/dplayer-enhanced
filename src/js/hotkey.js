@@ -91,15 +91,15 @@ class HotKey {
             const key = event.key;
             const keyCode = event.keyCode;
 
-            // Shift+. (>) : Increase speed — same as YouTube/VLC
-            if (!event.ctrlKey && !event.altKey && key === '>') {
+            // ` (backtick): Increase speed
+            if (!event.ctrlKey && !event.altKey && !event.shiftKey && key === '`') {
                 event.preventDefault();
                 this.changeSpeed(0.05);
                 return;
             }
 
-            // Shift+, (<) : Decrease speed — same as YouTube/VLC
-            if (!event.ctrlKey && !event.altKey && key === '<') {
+            // ~ (Shift+backtick): Decrease speed
+            if (!event.ctrlKey && !event.altKey && event.shiftKey && key === '~') {
                 event.preventDefault();
                 this.changeSpeed(-0.05);
                 return;
