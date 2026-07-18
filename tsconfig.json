@@ -21,6 +21,6 @@
         // Rollup handles emit; tsc is used for typecheck only via `npm run typecheck`
         "noEmit": false
     },
-    "include": ["src/js/**/*"],
+    "include": ["src/ts/**/*"],
     "exclude": ["node_modules", "dist", "docs"]
 }

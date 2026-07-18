@@ -60,7 +60,7 @@ let config;
 if (isDev) {
     // ── Dev (watch mode: rollup -c --watch) ──────────────────────────────────
     config = {
-        input: 'src/js/index.ts',
+        input: 'src/ts/index.ts',
         output: {
             file: 'dist/DPlayer.js',
             format: 'umd',
@@ -76,7 +76,7 @@ if (isDev) {
 
     // UMD — CDN / <script> tag; also writes the single DPlayer.css
     const umdConfig = {
-        input: 'src/js/index.ts',
+        input: 'src/ts/index.ts',
         output: {
             file: 'dist/DPlayer.min.js',
             format: 'umd',
@@ -90,7 +90,7 @@ if (isDev) {
 
     // ESM — for bundlers (Vite, webpack, Rollup); CSS already extracted by UMD build
     const esmConfig = {
-        input: 'src/js/index.ts',
+        input: 'src/ts/index.ts',
         output: {
             file: 'dist/DPlayer.esm.js',
             format: 'esm',
