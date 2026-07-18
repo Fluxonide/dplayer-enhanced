@@ -1,5 +1,7 @@
 class Bezel {
-    constructor(container) {
+    private container: HTMLElement;
+
+    constructor(container: HTMLElement) {
         this.container = container;
 
         this.container.addEventListener('animationend', () => {
@@ -7,7 +9,7 @@ class Bezel {
         });
     }
 
-    switch(icon) {
+    switch(icon: string): void {
         this.container.innerHTML = icon;
         this.container.classList.add('dplayer-bezel-transition');
     }

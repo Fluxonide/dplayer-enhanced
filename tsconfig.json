@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "ES2017",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": ["ES2017", "DOM", "DOM.Iterable"],
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "declaration": true,
+        "declarationDir": "./dist/types",
+        "allowJs": false,
+        "resolveJsonModule": true,
+        // Rollup handles emit; tsc is used for typecheck only via `npm run typecheck`
+        "noEmit": false
+    },
+    "include": ["src/js/**/*"],
+    "exclude": ["node_modules", "dist", "docs"]
+}

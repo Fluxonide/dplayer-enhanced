@@ -1,73 +1,49 @@
-/*
-W3C def language codes is :
-    language-code = primary-code ( "-" subcode )
-        primary-code    ISO 639-1   ( the names of language with 2 code )
-        subcode         ISO 3166    ( the names of countries )
+export type TranslationKey =
+    | 'danmaku-loading'
+    | 'top'
+    | 'bottom'
+    | 'rolling'
+    | 'input-danmaku-enter'
+    | 'about-author'
+    | 'dplayer-feedback'
+    | 'about-dplayer'
+    | 'loop'
+    | 'speed'
+    | 'opacity-danmaku'
+    | 'normal'
+    | 'please-input-danmaku'
+    | 'set-danmaku-color'
+    | 'set-danmaku-type'
+    | 'show-danmaku'
+    | 'video-failed'
+    | 'danmaku-failed'
+    | 'danmaku-send-failed'
+    | 'switching-quality'
+    | 'switched-quality'
+    | 'ff'
+    | 'rew'
+    | 'unlimited-danmaku'
+    | 'send-danmaku'
+    | 'setting'
+    | 'fullscreen'
+    | 'web-fullscreen'
+    | 'send'
+    | 'screenshot'
+    | 'airplay'
+    | 'chromecast'
+    | 'subtitle'
+    | 'off'
+    | 'show-subs'
+    | 'hide-subs'
+    | 'volume'
+    | 'live'
+    | 'video-info';
 
-NOTE: use lowercase to prevent case typo from user!
-Use this as shown below..... */
+type TranslationMap = Partial<Record<string, string>>;
+type TranslationStore = Record<string, TranslationMap>;
 
-function i18n(lang) {
-    this.lang = lang;
-    // in case someone says en-us, and en is present!
-    this.fallbackLang = this.lang.includes('-') ? this.lang.split('-')[0] : this.lang;
-    this.tran = (key) => {
-        key = key.toLowerCase();
-        if (tranTxt[this.lang] && tranTxt[this.lang][key]) {
-            return tranTxt[this.lang][key];
-        } else if (tranTxt[this.fallbackLang] && tranTxt[this.fallbackLang][key]) {
-            return tranTxt[this.fallbackLang][key];
-        } else if (standard[key]) {
-            return standard[key];
-        } else {
-            return key;
-        }
-    };
-}
-
-// abstract model for recognizing if valid translations are present
-// const model = {
-//     'danmaku-loading': [],
-//     top: [],
-//     bottom: [],
-//     rolling: [],
-//     'input-danmaku-enter': [],
-//     'about-author': [],
-//     'dplayer-feedback': [],
-//     'about-dplayer': [],
-//     loop: [],
-//     speed: [],
-//     'opacity-danmaku': [],
-//     normal: [],
-//     'please-input-danmaku': [],
-//     'set-danmaku-color': [],
-//     'set-danmaku-type': [],
-//     'show-danmaku': [],
-//     'video-failed': [],
-//     'danmaku-failed': [],
-//     'danmaku-send-failed': [],
-//     'switching-quality': [{ symbol: '%q', name: 'Quality', example: '720p' }],
-//     'switched-quality': [{ symbol: '%q', name: 'Quality', example: '720p' }],
-//     ff: [{ symbol: '%s', name: 'Seconds', example: '5' }],
-//     rew: [{ symbol: '%s', name: 'Seconds', example: '5' }],
-//     'unlimited-danmaku': [],
-//     'send-danmaku': [],
-//     setting: [],
-//     fullscreen: [],
-//     'web-fullscreen': [],
-//     send: [],
-//     screenshot: [],
-//     airplay: [],
-//     chromecast: [],
-//     'show-subs': [],
-//     'hide-subs': [],
-//     volume: [],
-//     live: [],
-//     'video-info': [],
-// };
-
-// Standard english translations
-const standard = {
+// Standard English translations
+const standard: Record<TranslationKey, string> = {
     'danmaku-loading': 'Danmaku is loading',
     top: 'Top',
     bottom: 'Bottom',
@@ -109,8 +85,7 @@ const standard = {
     'video-info': 'Video info',
 };
 
-// add translation text here
-const tranTxt = {
+const tranTxt: TranslationStore = {
     en: standard,
     'zh-cn': {
         'danmaku-loading': '弹幕加载中',
@@ -214,8 +189,6 @@ const tranTxt = {
         'video-failed': '비디오를 불러오지 못했습니다.',
         'danmaku-failed': 'Danmaku를 불러오지 못했습니다.',
         'danmaku-send-failed': 'Danmaku 전송에 실패했습니다.',
-        'Switching to': '',
-        'Switched to': '',
         'switching-quality': '전환 %q 화질',
         'switched-quality': '전환 됨 %q 화질',
         ff: '앞으로 %s 초',
@@ -233,7 +206,7 @@ const tranTxt = {
         off: '끄다',
         'show-subs': '자막 보이기',
         'hide-subs': '자막 숨기기',
-        Volume: '볼륨',
+        volume: '볼륨',
         live: '생방송',
         'video-info': '비디오 정보',
     },
@@ -269,58 +242,57 @@ const tranTxt = {
         send: 'Senden',
         screenshot: 'Screenshot',
         airplay: 'AirPlay',
-        'show-subs': 'Zeige Untertitel',
         chromecast: 'ChromeCast',
         subtitle: 'Untertitel',
         off: 'Schließung',
+        'show-subs': 'Zeige Untertitel',
         'hide-subs': 'Verstecke Untertitel',
         volume: 'Lautstärke',
         live: 'Live',
         'video-info': 'Video Info',
     },
-    "ja":{
-        'danmaku-loading':'コメントを読み込んでいます',
-        top:'トップ',
-        bottom:'ボトム',
-        rolling:'スクロール',
-        'input-danmaku-enter':'コメントを入力し，Enter で送信',
-        'about-author':'作者について',
-        'dplayer-feedback':'DPlayer についての意見・要望',
-        'about-dplayer':'DPlayer について',
-        loop:'くり返し',
-        speed:'再生速度',
-        'opacity-danmaku':'コメントの透明度',
-        normal:'通常',
-        'please-input-danmaku':'コメントを入力してください!',
-        'set-danmaku-color':'コメントの色',
-        'set-danmaku-type':'コメントの種類',
-        'show-danmaku':'コメント表示',
-        'video-failed':'ビデオの読み込みに失敗',
-        'danmaku-failed':'コメントの読み込みに失敗',
-        'danmaku-send-failed':'コメントの送信に失敗',
-        'switching-quality':'%qへ切り替え中',
-        'switched-quality':'%qへ切り替え完了',
-        quality:'へ',
-        ff:'%s 秒早送り',
-        rew:'%s 秒早戻し',
-        'unlimited-danmaku':'コメント無制限',
-        'send-danmaku':'コメント送信',
-        setting:'設定',
-        fullscreen:'全画面表示',
-        'web-fullscreen':'ブラウザ全体表示',
-        send:'送信',
-        screenshot:'画面コピー',
-        airplay:'AirPlay',
-        'show-subs':'字幕表示',
+    ja: {
+        'danmaku-loading': 'コメントを読み込んでいます',
+        top: 'トップ',
+        bottom: 'ボトム',
+        rolling: 'スクロール',
+        'input-danmaku-enter': 'コメントを入力し，Enter で送信',
+        'about-author': '作者について',
+        'dplayer-feedback': 'DPlayer についての意見・要望',
+        'about-dplayer': 'DPlayer について',
+        loop: 'くり返し',
+        speed: '再生速度',
+        'opacity-danmaku': 'コメントの透明度',
+        normal: '通常',
+        'please-input-danmaku': 'コメントを入力してください!',
+        'set-danmaku-color': 'コメントの色',
+        'set-danmaku-type': 'コメントの種類',
+        'show-danmaku': 'コメント表示',
+        'video-failed': 'ビデオの読み込みに失敗',
+        'danmaku-failed': 'コメントの読み込みに失敗',
+        'danmaku-send-failed': 'コメントの送信に失敗',
+        'switching-quality': '%qへ切り替え中',
+        'switched-quality': '%qへ切り替え完了',
+        ff: '%s 秒早送り',
+        rew: '%s 秒早戻し',
+        'unlimited-danmaku': 'コメント無制限',
+        'send-danmaku': 'コメント送信',
+        setting: '設定',
+        fullscreen: '全画面表示',
+        'web-fullscreen': 'ブラウザ全体表示',
+        send: '送信',
+        screenshot: '画面コピー',
+        airplay: 'AirPlay',
         chromecast: 'ChromeCast',
         subtitle: '字幕',
         off: 'OFF',
-        'hide-subs':'字幕非表示',
-        volume:'音量',
-        live:'ライブ',
-        'video-info':'動画情報'
+        'show-subs': '字幕表示',
+        'hide-subs': '字幕非表示',
+        volume: '音量',
+        live: 'ライブ',
+        'video-info': '動画情報',
     },
-    'ru': {
+    ru: {
         'danmaku-loading': 'Загрузка комментариев',
         top: 'Вверху',
         bottom: 'Внизу',
@@ -363,4 +335,20 @@ const tranTxt = {
     },
 };
 
-export { i18n };
+export class i18n {
+    private lang: string;
+    private fallbackLang: string;
+
+    constructor(lang: string) {
+        this.lang = lang;
+        this.fallbackLang = lang.includes('-') ? lang.split('-')[0] : lang;
+    }
+
+    tran = (key: string): string => {
+        const lower = key.toLowerCase();
+        if (tranTxt[this.lang]?.[lower]) return tranTxt[this.lang][lower]!;
+        if (tranTxt[this.fallbackLang]?.[lower]) return tranTxt[this.fallbackLang][lower]!;
+        if ((standard as TranslationMap)[lower]) return (standard as TranslationMap)[lower]!;
+        return key;
+    };
+}

@@ -1,12 +1,45 @@
 import utils from './utils';
+import { DPlayerInstance, FullScreenType, ScrollPosition } from './types';
+
+// Vendor-prefixed fullscreen API augmentations
+interface VendorDocument extends Document {
+    mozFullScreenElement?: Element | null;
+    msFullscreenElement?: Element | null;
+    webkitFullscreenElement?: Element | null;
+    mozCancelFullScreen?: () => Promise<void>;
+    webkitCancelFullScreen?: () => void;
+    webkitCancelFullscreen?: () => void;
+    msCancelFullScreen?: () => void;
+    msExitFullscreen?: () => Promise<void>;
+}
+
+interface VendorHTMLElement extends HTMLElement {
+    mozRequestFullScreen?: () => Promise<void>;
+    webkitRequestFullscreen?: () => Promise<void>;
+    msRequestFullscreen?: () => Promise<void>;
+    webkitEnterFullscreen?: () => void;
+    webkitEnterFullScreen?: () => void;
+}
+
+interface VendorHTMLVideoElement extends HTMLVideoElement {
+    webkitEnterFullscreen?: () => void;
+    webkitEnterFullScreen?: () => void;
+}
 
 class FullScreen {
-    constructor(player) {
+    private player: DPlayerInstance;
+    private lastScrollPosition: ScrollPosition;
+    private fullscreenchange: () => void;
+    private docfullscreenchange: () => void;
+
+    constructor(player: DPlayerInstance) {
         this.player = player;
         this.lastScrollPosition = { left: 0, top: 0 };
+
         this.player.events.on('webfullscreen', () => {
             this.player.resize();
         });
+
         this.player.events.on('webfullscreen_cancel', () => {
             this.player.resize();
             utils.setScrollPosition(this.lastScrollPosition);
@@ -21,11 +54,13 @@ class FullScreen {
                 this.player.events.trigger('fullscreen_cancel');
             }
         };
+
         this.docfullscreenchange = () => {
-            const fullEle = document.fullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-            if (fullEle && fullEle !== this.player.container) {
-                return;
-            }
+            const doc = document as VendorDocument;
+            const fullEle = doc.fullscreenElement || doc.mozFullScreenElement || doc.msFullscreenElement;
+
+            if (fullEle && fullEle !== this.player.container) return;
+
             this.player.resize();
             if (fullEle) {
                 this.player.events.trigger('fullscreen');
@@ -34,6 +69,7 @@ class FullScreen {
                 this.player.events.trigger('fullscreen_cancel');
             }
         };
+
         if (/Firefox/.test(navigator.userAgent)) {
             document.addEventListener('mozfullscreenchange', this.docfullscreenchange);
             document.addEventListener('fullscreenchange', this.docfullscreenchange);
@@ -45,37 +81,39 @@ class FullScreen {
         }
     }
 
-    isFullScreen(type = 'browser') {
+    isFullScreen(type: FullScreenType = 'browser'): boolean | Element | null {
+        const doc = document as VendorDocument;
         switch (type) {
             case 'browser':
-                return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+                return doc.fullscreenElement || doc.mozFullScreenElement || (document as Document & { webkitFullscreenElement?: Element }).webkitFullscreenElement || doc.msFullscreenElement || null;
             case 'web':
                 return this.player.container.classList.contains('dplayer-fulled');
         }
     }
 
-    request(type = 'browser') {
-        const anotherType = type === 'browser' ? 'web' : 'browser';
-        const anotherTypeOn = this.isFullScreen(anotherType);
-        if (!anotherTypeOn) {
+    request(type: FullScreenType = 'browser'): void {
+        const anotherType: FullScreenType = type === 'browser' ? 'web' : 'browser';
+        if (!this.isFullScreen(anotherType)) {
             this.lastScrollPosition = utils.getScrollPosition();
         }
 
+        const el = this.player.container as VendorHTMLElement;
+        const video = this.player.video as VendorHTMLVideoElement;
+
         switch (type) {
             case 'browser':
-                if (this.player.container.requestFullscreen) {
-                    this.player.container.requestFullscreen();
-                } else if (this.player.container.mozRequestFullScreen) {
-                    this.player.container.mozRequestFullScreen();
-                } else if (this.player.container.webkitRequestFullscreen) {
-                    this.player.container.webkitRequestFullscreen();
-                } else if (this.player.video.webkitEnterFullscreen) {
-                    // Safari for iOS
-                    this.player.video.webkitEnterFullscreen();
-                } else if (this.player.video.webkitEnterFullScreen) {
-                    this.player.video.webkitEnterFullScreen();
-                } else if (this.player.container.msRequestFullscreen) {
-                    this.player.container.msRequestFullscreen();
+                if (el.requestFullscreen) {
+                    el.requestFullscreen();
+                } else if (el.mozRequestFullScreen) {
+                    el.mozRequestFullScreen();
+                } else if (el.webkitRequestFullscreen) {
+                    el.webkitRequestFullscreen();
+                } else if (video.webkitEnterFullscreen) {
+                    video.webkitEnterFullscreen();
+                } else if (video.webkitEnterFullScreen) {
+                    video.webkitEnterFullScreen();
+                } else if (el.msRequestFullscreen) {
+                    el.msRequestFullscreen();
                 }
                 break;
             case 'web':
@@ -85,26 +123,28 @@ class FullScreen {
                 break;
         }
 
-        if (anotherTypeOn) {
+        if (this.isFullScreen(anotherType)) {
             this.cancel(anotherType);
         }
     }
 
-    cancel(type = 'browser') {
+    cancel(type: FullScreenType = 'browser'): void {
+        const doc = document as VendorDocument;
+
         switch (type) {
             case 'browser':
-                if (document.cancelFullScreen) {
-                    document.cancelFullScreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.webkitCancelFullScreen) {
-                    document.webkitCancelFullScreen();
-                } else if (document.webkitCancelFullscreen) {
-                    document.webkitCancelFullscreen();
-                } else if (document.msCancelFullScreen) {
-                    document.msCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
+                if (doc.mozCancelFullScreen) {
+                    void doc.mozCancelFullScreen();
+                } else if (doc.webkitCancelFullScreen) {
+                    doc.webkitCancelFullScreen();
+                } else if (doc.webkitCancelFullscreen) {
+                    doc.webkitCancelFullscreen();
+                } else if (doc.msCancelFullScreen) {
+                    doc.msCancelFullScreen();
+                } else if (doc.msExitFullscreen) {
+                    void doc.msExitFullscreen();
+                } else if (doc.exitFullscreen) {
+                    void doc.exitFullscreen();
                 }
                 break;
             case 'web':
@@ -115,7 +155,7 @@ class FullScreen {
         }
     }
 
-    toggle(type = 'browser') {
+    toggle(type: FullScreenType = 'browser'): void {
         if (this.isFullScreen(type)) {
             this.cancel(type);
         } else {
@@ -123,7 +163,7 @@ class FullScreen {
         }
     }
 
-    destroy() {
+    destroy(): void {
         if (/Firefox/.test(navigator.userAgent)) {
             document.removeEventListener('mozfullscreenchange', this.docfullscreenchange);
             document.removeEventListener('fullscreenchange', this.docfullscreenchange);

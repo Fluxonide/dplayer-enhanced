@@ -17,25 +17,46 @@ import subtitle from '../assets/subtitle.svg';
 import loading from '../assets/loading.svg';
 import chromecast from '../assets/chromecast.svg';
 
-const Icons = {
-    play: play,
-    pause: pause,
-    volumeUp: volumeUp,
-    volumeDown: volumeDown,
-    volumeOff: volumeOff,
-    full: full,
-    fullWeb: fullWeb,
-    setting: setting,
-    right: right,
-    comment: comment,
-    commentOff: commentOff,
-    send: send,
-    pallette: pallette,
-    camera: camera,
-    subtitle: subtitle,
-    loading: loading,
-    airplay: airplay,
-    chromecast: chromecast,
+export interface IconsMap {
+    play: string;
+    pause: string;
+    volumeUp: string;
+    volumeDown: string;
+    volumeOff: string;
+    full: string;
+    fullWeb: string;
+    setting: string;
+    right: string;
+    comment: string;
+    commentOff: string;
+    send: string;
+    pallette: string;
+    camera: string;
+    subtitle: string;
+    loading: string;
+    airplay: string;
+    chromecast: string;
+}
+
+const Icons: IconsMap = {
+    play,
+    pause,
+    volumeUp,
+    volumeDown,
+    volumeOff,
+    full,
+    fullWeb,
+    setting,
+    right,
+    comment,
+    commentOff,
+    send,
+    pallette,
+    camera,
+    subtitle,
+    loading,
+    airplay,
+    chromecast,
 };
 
 export default Icons;

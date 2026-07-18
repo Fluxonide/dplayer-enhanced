@@ -1,4 +1,10 @@
+import { AllEventName, VideoEventName, PlayerEventName, EventCallback } from './types';
+
 class Events {
+    events: Partial<Record<AllEventName, EventCallback[]>>;
+    readonly videoEvents: VideoEventName[];
+    readonly playerEvents: PlayerEventName[];
+
     constructor() {
         this.events = {};
 
@@ -27,6 +33,7 @@ class Events {
             'volumechange',
             'waiting',
         ];
+
         this.playerEvents = [
             'screenshot',
             'thumbnails_show',
@@ -37,6 +44,8 @@ class Events {
             'danmaku_loaded',
             'danmaku_send',
             'danmaku_opacity',
+            'danmaku_load_start',
+            'danmaku_load_end',
             'contextmenu_show',
             'contextmenu_hide',
             'notice_show',
@@ -55,30 +64,30 @@ class Events {
         ];
     }
 
-    on(name, callback) {
+    on(name: AllEventName, callback: EventCallback): void {
         if (this.type(name) && typeof callback === 'function') {
             if (!this.events[name]) {
                 this.events[name] = [];
             }
-            this.events[name].push(callback);
+            this.events[name]!.push(callback);
         }
     }
 
-    trigger(name, info) {
-        if (this.events[name] && this.events[name].length) {
-            for (let i = 0; i < this.events[name].length; i++) {
-                this.events[name][i](info);
+    trigger(name: AllEventName, info?: unknown): void {
+        const handlers = this.events[name];
+        if (handlers && handlers.length) {
+            for (let i = 0; i < handlers.length; i++) {
+                handlers[i](info);
             }
         }
     }
 
-    type(name) {
-        if (this.playerEvents.indexOf(name) !== -1) {
+    type(name: AllEventName): 'player' | 'video' | null {
+        if ((this.playerEvents as string[]).includes(name)) {
             return 'player';
-        } else if (this.videoEvents.indexOf(name) !== -1) {
+        } else if ((this.videoEvents as string[]).includes(name)) {
             return 'video';
         }
-
         console.error(`Unknown event name: ${name}`);
         return null;
     }

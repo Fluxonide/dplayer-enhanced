@@ -1,5 +1,13 @@
+import { SubtitleOptions } from './types';
+import Events from './events';
+
 class Subtitle {
-    constructor(container, video, options, events) {
+    private container: HTMLElement;
+    private video: HTMLVideoElement;
+    private options: SubtitleOptions;
+    private events: Events;
+
+    constructor(container: HTMLElement, video: HTMLVideoElement, options: SubtitleOptions, events: Events) {
         this.container = container;
         this.video = video;
         this.options = options;
@@ -8,16 +16,16 @@ class Subtitle {
         this.init();
     }
 
-    init() {
-        this.container.style.fontSize = this.options.fontSize;
-        this.container.style.bottom = this.options.bottom;
-        this.container.style.color = this.options.color;
+    private init(): void {
+        this.container.style.fontSize = this.options.fontSize ?? '20px';
+        this.container.style.bottom = this.options.bottom ?? '40px';
+        this.container.style.color = this.options.color ?? '#fff';
 
         if (this.video.textTracks && this.video.textTracks[0]) {
             const track = this.video.textTracks[0];
 
             track.oncuechange = () => {
-                const cue = track.activeCues[track.activeCues.length - 1];
+                const cue = track.activeCues?.[track.activeCues.length - 1] as VTTCue | undefined;
                 this.container.innerHTML = '';
                 if (cue) {
                     const template = document.createElement('div');
@@ -33,17 +41,17 @@ class Subtitle {
         }
     }
 
-    show() {
+    show(): void {
         this.container.classList.remove('dplayer-subtitle-hide');
         this.events.trigger('subtitle_show');
     }
 
-    hide() {
+    hide(): void {
         this.container.classList.add('dplayer-subtitle-hide');
         this.events.trigger('subtitle_hide');
     }
 
-    toggle() {
+    toggle(): void {
         if (this.container.classList.contains('dplayer-subtitle-hide')) {
             this.show();
         } else {
