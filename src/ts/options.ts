@@ -16,7 +16,7 @@ export default function handleOption(options: Partial<DPlayerOptions> & { video:
         hotkey: true,
         globalHotkey: true,
         preload: 'metadata',
-        volume: 0.7,
+        volume: 1,
         playbackSpeed: [0.5, 0.75, 1, 1.25, 1.5, 2],
         apiBackend: defaultApiBackend,
         video: {} as DPlayerOptions['video'],
