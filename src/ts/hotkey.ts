@@ -204,12 +204,6 @@ class HotKey {
                 this.player.fullScreen.toggle('web');
                 break;
 
-            // S – volume down
-            case 's':
-                e.preventDefault();
-                this.player.volume(this.player.volume() - 0.1);
-                break;
-
             // M – toggle mute
             case 'm':
                 e.preventDefault();
