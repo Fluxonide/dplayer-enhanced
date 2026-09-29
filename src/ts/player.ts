@@ -48,6 +48,9 @@ class DPlayer {
     plugins: Record<string, unknown> = {};
     docClickFun: (() => void) | null = null;
     containerClickFun: (() => void) | null = null;
+    visibilityChangeFun: (() => void) | null = null;
+    private _tabHidden = false;
+    private _pausedAt = 0;
 
     tran: (key: string) => string;
     events: Events;
@@ -184,6 +187,18 @@ class DPlayer {
             document.addEventListener('click', this.docClickFun, true);
             this.container.addEventListener('click', this.containerClickFun, true);
         }
+ 
+        this.visibilityChangeFun = () => {
+            if (document.hidden) {
+                this._tabHidden = true;
+            } else if (this._tabHidden) {
+                this._tabHidden = false;
+                if (!this.paused && this.video.paused) {
+                    this.video.play().catch(() => {});
+                }
+            }
+        };
+        document.addEventListener('visibilitychange', this.visibilityChangeFun);
 
         this.paused = true;
         this.timer = new Timer(this);
@@ -219,7 +234,25 @@ class DPlayer {
             this.notice(`${timeText} / ${durationText}`);
         }
 
+        const wasPaused = this.paused;
+
         this.video.currentTime = time;
+
+        // When seeking while paused, some files (e.g. MP4s with malformed
+        // MPEG-4 Systems tracks) cause the browser to briefly start audio
+        // decoding before the video decoder catches up. Explicitly re-pause
+        // the native element to prevent audio from leaking through.
+        if (wasPaused) {
+            this.video.pause();
+            const handleSeeked = (): void => {
+                this.video.removeEventListener('seeked', handleSeeked);
+                if (this.paused) {
+                    this.video.pause();
+                }
+            };
+            this.video.addEventListener('seeked', handleSeeked);
+        }
+
         this.danmaku?.seek();
         this.bar.set('played', time / this.video.duration, 'width');
         this.template.ptime.innerHTML = utils.secondToTime(time);
@@ -245,6 +278,13 @@ class DPlayer {
                 .then(() => {});
         }
 
+        if (this.plugins.hls) {
+            const hlsInst = this.plugins.hls as { startLoad?: (pos?: number) => void };
+            if (typeof hlsInst.startLoad === 'function') {
+                hlsInst.startLoad(this.video.currentTime);
+            }
+        }
+
         this.timer.enable('loading');
         this.container.classList.remove('dplayer-paused');
         this.container.classList.add('dplayer-playing');
@@ -260,6 +300,7 @@ class DPlayer {
     /** Pause playback */
     pause(fromNative?: boolean): void {
         this.paused = true;
+        this._pausedAt = Date.now();
         this.container.classList.remove('dplayer-loading');
 
         if (!this.video.paused && !utils.isMobile) {
@@ -376,7 +417,20 @@ class DPlayer {
             this.type = 'normal';
         }
 
-        type HlsLib = { isSupported(): boolean; new (opts: unknown): { loadSource(src: string): void; attachMedia(v: HTMLVideoElement): void; destroy(): void } };
+        type HlsLib = {
+            isSupported(): boolean;
+            Events?: Record<string, string>;
+            ErrorTypes?: Record<string, string>;
+            ErrorDetails?: Record<string, string>;
+            new (opts: unknown): {
+                loadSource(src: string): void;
+                attachMedia(v: HTMLVideoElement): void;
+                destroy(): void;
+                startLoad(): void;
+                recoverMediaError(): void;
+                on(event: string, cb: (e: string, data: { fatal?: boolean; type?: string; details?: string }) => void): void;
+            };
+        };
         type FlvLib = { isSupported(): boolean; createPlayer(ds: unknown, cfg: unknown): { attachMediaElement(v: HTMLVideoElement): void; load(): void; unload(): void; detachMediaElement(): void; destroy(): void } };
         type DashLib = { MediaPlayer(): { create(): { initialize(v: HTMLVideoElement, src: string, autoplay: boolean, startTime: number): void; updateSettings(o: unknown): void }; reset(): void } };
         type WTLib = {
@@ -390,8 +444,45 @@ class DPlayer {
             case 'hls':
                 if (win.Hls) {
                     if (win.Hls.isSupported()) {
-                        const hls = new win.Hls(this.options.pluginOptions?.hls ?? {});
+                        const defaultHlsConfig = {
+                            maxBufferLength: 30,
+                            maxMaxBufferLength: 600,
+                            maxBufferSize: 60 * 1000 * 1000,
+                            maxBufferHole: 0.5,
+                            lowLatencyMode: false,
+                            backBufferLength: 30,
+                            fragLoadingTimeOut: 20000,
+                            manifestLoadingTimeOut: 20000,
+                            fragLoadingMaxRetry: 6,
+                            fragLoadingMaxRetryTimeout: 64000,
+                            levelLoadingMaxRetry: 6,
+                            levelLoadingMaxRetryTimeout: 64000,
+                            nudgeOffset: 0.1,
+                            nudgeMaxRetry: 5,
+                        };
+                        const hls = new win.Hls(Object.assign(defaultHlsConfig, this.options.pluginOptions?.hls ?? {}));
                         this.plugins.hls = hls;
+
+                        if (typeof hls.on === 'function') {
+                            hls.on(win.Hls.Events?.ERROR ?? 'hlsError', (_event: string, data: { fatal?: boolean; type?: string; details?: string }) => {
+                                if (data.fatal) {
+                                    switch (data.type) {
+                                        case win.Hls?.ErrorTypes?.NETWORK_ERROR ?? 'networkError':
+                                            hls.startLoad();
+                                            break;
+                                        case win.Hls?.ErrorTypes?.MEDIA_ERROR ?? 'mediaError':
+                                            hls.recoverMediaError();
+                                            break;
+                                        default:
+                                            hls.destroy();
+                                            break;
+                                    }
+                                } else if (data.details === (win.Hls?.ErrorDetails?.BUFFER_STALLED_ERROR ?? 'bufferStalledError')) {
+                                    hls.startLoad();
+                                }
+                            });
+                        }
+
                         hls.loadSource(video.src);
                         hls.attachMedia(video);
                         this.events.on('destroy', () => {
@@ -677,6 +768,7 @@ class DPlayer {
         this.pause();
         if (this.docClickFun) document.removeEventListener('click', this.docClickFun, true);
         if (this.containerClickFun) this.container.removeEventListener('click', this.containerClickFun, true);
+        if (this.visibilityChangeFun) document.removeEventListener('visibilitychange', this.visibilityChangeFun);
         this.fullScreen.destroy();
         this.hotkey.destroy();
         this.contextmenu.destroy();
